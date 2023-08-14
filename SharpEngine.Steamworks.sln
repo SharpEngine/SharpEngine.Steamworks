@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpEngine.Steamworks", "SharpEngine.Steamworks\SharpEngine.Steamworks.csproj", "{E2920444-2C6C-4653-9D5F-27D3CEFDDAF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.csproj", "{EB3A9616-E5B9-4F28-B73D-0ADF6AFC37E8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E2920444-2C6C-4653-9D5F-27D3CEFDDAF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2920444-2C6C-4653-9D5F-27D3CEFDDAF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2920444-2C6C-4653-9D5F-27D3CEFDDAF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2920444-2C6C-4653-9D5F-27D3CEFDDAF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB3A9616-E5B9-4F28-B73D-0ADF6AFC37E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB3A9616-E5B9-4F28-B73D-0ADF6AFC37E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB3A9616-E5B9-4F28-B73D-0ADF6AFC37E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB3A9616-E5B9-4F28-B73D-0ADF6AFC37E8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
