@@ -13,6 +13,6 @@ public static class SESteamworks
     public static void AddVersions()
     {
         DebugManager.Versions.Add("Steamworks.NET", "20.1.0");
-        DebugManager.Versions.Add("SharpEngine.Steamworks", "1.0.0");
+        DebugManager.Versions.Add("SharpEngine.Steamworks", "1.0.1");
     }
 }
