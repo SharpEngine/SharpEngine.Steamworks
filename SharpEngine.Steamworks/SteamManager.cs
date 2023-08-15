@@ -19,6 +19,11 @@ public static class SteamManager
     private static readonly List<Achievement> Achievements = new();
 
     /// <summary>
+    /// Is SteamManager is Running
+    /// </summary>
+    public static bool IsRunning { get; private set; } = false;
+
+    /// <summary>
     /// Add Achievement to Manager
     /// </summary>
     /// <param name="achievement">Achievement</param>
@@ -40,7 +45,8 @@ public static class SteamManager
     /// </summary>
     /// <param name="window">Game Window</param>
     /// <param name="appId">App Steam Id</param>
-    public static void Init(Window window, uint appId)
+    /// <param name="stopIfNotSteam">Stop Window if Steam is not running</param>
+    public static void Init(Window window, uint appId, bool stopIfNotSteam = true)
     {
         if (SteamAPI.RestartAppIfNecessary((AppId_t)appId))
         {
@@ -51,25 +57,31 @@ public static class SteamManager
         DebugManager.Log(LogLevel.LogInfo, "STEAM: Attempting initialization...");
         try
         {
+            IsRunning = SteamAPI.IsSteamRunning();
             DebugManager.Log(LogLevel.LogInfo, $"STEAM: Is Running : {SteamAPI.IsSteamRunning()}");
-            if (SteamAPI.Init())
+            if (SteamAPI.IsSteamRunning())
             {
-                DebugManager.Log(LogLevel.LogInfo, "STEAM: Initialization succeeded !");
-                _gameId = SteamUtils.GetAppID();
-                
-                SteamClient.SetWarningMessageHook(SteamApiDebugTextHook);
-                //Callback<GameOverlayActivated_t>.Create(OnGameOverlayActivated);
-                Callback<UserStatsReceived_t>.Create(OnUserStatsReceived);
-                Callback<UserStatsStored_t>.Create(OnUserStatsStored);
-                Callback<UserAchievementStored_t>.Create(OnAchievementStored);
-                
-                DebugManager.Log(LogLevel.LogInfo, $"STEAM: Connected User : {UserName}");
+                if (SteamAPI.Init())
+                {
+                    DebugManager.Log(LogLevel.LogInfo, "STEAM: Initialization succeeded !");
+                    _gameId = SteamUtils.GetAppID();
+
+                    SteamClient.SetWarningMessageHook(SteamApiDebugTextHook);
+                    //Callback<GameOverlayActivated_t>.Create(OnGameOverlayActivated);
+                    Callback<UserStatsReceived_t>.Create(OnUserStatsReceived);
+                    Callback<UserStatsStored_t>.Create(OnUserStatsStored);
+                    Callback<UserAchievementStored_t>.Create(OnAchievementStored);
+
+                    DebugManager.Log(LogLevel.LogInfo, $"STEAM: Connected User : {UserName}");
+                }
+                else
+                {
+                    DebugManager.Log(LogLevel.LogError, $"STEAM: Initialization failed !");
+                    window.Stop();
+                }
             }
-            else
-            {
-                DebugManager.Log(LogLevel.LogError, $"STEAM: Initialization failed !");
+            else if (stopIfNotSteam)
                 window.Stop();
-            }
         }
         catch (Exception e)
         {
