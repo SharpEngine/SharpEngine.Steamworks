@@ -9,12 +9,12 @@ public class ItemInstallInfo
     /// Size of Item
     /// </summary>
     public ulong SizeOnDisk { get; }
-    
+
     /// <summary>
     /// Folder of Item
     /// </summary>
     public string Folder { get; }
-    
+
     /// <summary>
     /// Install timestamp of Item
     /// </summary>
