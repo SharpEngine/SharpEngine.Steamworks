@@ -8,12 +8,19 @@ using SharpEngine.Steamworks;
 
 namespace Testing;
 
-public class MyScene: Scene
+public class MyScene : Scene
 {
     public MyScene()
     {
-        AddWidget(new Label(new Vec2(640, 460), "Instructions :\nE : Print UserName\nR : Print Achievements",
-            "RAYLIB_DEFAULT", centerAllLines: true, fontSize: 50));
+        AddWidget(
+            new Label(
+                new Vec2(640, 460),
+                "Instructions :\nE : Print UserName\nR : Print Achievements",
+                "RAYLIB_DEFAULT",
+                centerAllLines: true,
+                fontSize: 50
+            )
+        );
     }
 
     public override void Unload()
@@ -33,9 +40,15 @@ public class MyScene: Scene
         if (InputManager.IsKeyPressed(Key.R))
             foreach (var achievement in SteamManager.GetAchievements())
             {
-                DebugManager.Log(LogLevel.LogInfo, $"TESTING: Achievement : {achievement.AchievementId}");
+                DebugManager.Log(
+                    LogLevel.LogInfo,
+                    $"TESTING: Achievement : {achievement.AchievementId}"
+                );
                 DebugManager.Log(LogLevel.LogInfo, $"TESTING:   Name : {achievement.DisplayName}");
-                DebugManager.Log(LogLevel.LogInfo, $"TESTING:   Description : {achievement.DisplayDescription}");
+                DebugManager.Log(
+                    LogLevel.LogInfo,
+                    $"TESTING:   Description : {achievement.DisplayDescription}"
+                );
                 DebugManager.Log(LogLevel.LogInfo, $"TESTING:   Achieved : {achievement.Achieved}");
                 DebugManager.Log(LogLevel.LogInfo, $"TESTING:   Icon : {achievement.Icon}");
             }

@@ -28,18 +28,18 @@ public static class SteamManager
     /// </summary>
     /// <param name="achievement">Achievement</param>
     public static void AddAchievement(Achievement achievement) => Achievements.Add(achievement);
-    
+
     /// <summary>
     /// Get All Achievements
     /// </summary>
     /// <returns>Achievements</returns>
     public static List<Achievement> GetAchievements() => Achievements;
-    
+
     /// <summary>
     /// Get Steam User Name
     /// </summary>
     public static string UserName => SteamFriends.GetPersonaName();
-    
+
     /// <summary>
     /// Init SteamManager
     /// </summary>
@@ -53,7 +53,7 @@ public static class SteamManager
             window.Stop();
             return;
         }
-        
+
         DebugManager.Log(LogLevel.LogInfo, "STEAM: Attempting initialization...");
         try
         {
@@ -85,7 +85,10 @@ public static class SteamManager
         }
         catch (Exception e)
         {
-            DebugManager.Log(LogLevel.LogError, $"STEAM: Exception during Initialization: \n{e.StackTrace}");
+            DebugManager.Log(
+                LogLevel.LogError,
+                $"STEAM: Exception during Initialization: \n{e.StackTrace}"
+            );
             window.Stop();
         }
     }
@@ -103,7 +106,10 @@ public static class SteamManager
         }
         catch (Exception e)
         {
-            DebugManager.Log(LogLevel.LogError, $"STEAM: Exception during Shutdown: \n{e.StackTrace}");
+            DebugManager.Log(
+                LogLevel.LogError,
+                $"STEAM: Exception during Shutdown: \n{e.StackTrace}"
+            );
         }
     }
 
@@ -134,7 +140,9 @@ public static class SteamManager
     {
         var nb = SteamUGC.GetNumSubscribedItems();
         var items = new PublishedFileId_t[nb];
-        return SteamUGC.GetSubscribedItems(items, nb) != 0 ? items : Array.Empty<PublishedFileId_t>();
+        return SteamUGC.GetSubscribedItems(items, nb) != 0
+            ? items
+            : Array.Empty<PublishedFileId_t>();
     }
 
     /// <summary>
@@ -150,7 +158,13 @@ public static class SteamManager
     /// <param name="id">Item</param>
     /// <returns>Install Info</returns>
     public static ItemInstallInfo? GetItemInstallInfo(PublishedFileId_t id) =>
-        SteamUGC.GetItemInstallInfo(id, out var punSizeOnDisk, out var pchFolder, 256, out var punTimeStamp)
+        SteamUGC.GetItemInstallInfo(
+            id,
+            out var punSizeOnDisk,
+            out var pchFolder,
+            256,
+            out var punTimeStamp
+        )
             ? new ItemInstallInfo(punSizeOnDisk, pchFolder, punTimeStamp)
             : null;
 
@@ -172,7 +186,10 @@ public static class SteamManager
     }
 
     private static void SteamApiDebugTextHook(int nSeverity, StringBuilder pchDebugText) =>
-        DebugManager.Log(LogLevel.LogError, $"STEAM: Severity : {nSeverity} - Message : {pchDebugText}");
+        DebugManager.Log(
+            LogLevel.LogError,
+            $"STEAM: Severity : {nSeverity} - Message : {pchDebugText}"
+        );
 
     /*private static void OnGameOverlayActivated(GameOverlayActivated_t pCallback)
     {
@@ -183,7 +200,8 @@ public static class SteamManager
 
     private static void OnUserStatsReceived(UserStatsReceived_t pCallback)
     {
-        if(_gameId != (AppId_t)pCallback.m_nGameID) return;
+        if (_gameId != (AppId_t)pCallback.m_nGameID)
+            return;
 
         if (pCallback.m_eResult == EResult.k_EResultOK)
         {
@@ -192,23 +210,34 @@ public static class SteamManager
 
             foreach (var achievement in Achievements)
             {
-                SteamUserStats.GetAchievement(achievement.AchievementId, out var achievementAchieved);
+                SteamUserStats.GetAchievement(
+                    achievement.AchievementId,
+                    out var achievementAchieved
+                );
                 achievement.Achieved = achievementAchieved;
-                achievement.DisplayName =
-                    SteamUserStats.GetAchievementDisplayAttribute(achievement.AchievementId, "name");
-                achievement.DisplayDescription =
-                    SteamUserStats.GetAchievementDisplayAttribute(achievement.AchievementId, "desc");
+                achievement.DisplayName = SteamUserStats.GetAchievementDisplayAttribute(
+                    achievement.AchievementId,
+                    "name"
+                );
+                achievement.DisplayDescription = SteamUserStats.GetAchievementDisplayAttribute(
+                    achievement.AchievementId,
+                    "desc"
+                );
             }
         }
         else
-            DebugManager.Log(LogLevel.LogError, $"STEAM: ReceiveStats - Failed : {pCallback.m_eResult}");
+            DebugManager.Log(
+                LogLevel.LogError,
+                $"STEAM: ReceiveStats - Failed : {pCallback.m_eResult}"
+            );
     }
 
     private static void OnUserStatsStored(UserStatsStored_t pCallback)
     {
-        if(_gameId != (AppId_t)pCallback.m_nGameID) return;
-        
-        if(pCallback.m_eResult == EResult.k_EResultOK)
+        if (_gameId != (AppId_t)pCallback.m_nGameID)
+            return;
+
+        if (pCallback.m_eResult == EResult.k_EResultOK)
             DebugManager.Log(LogLevel.LogInfo, "STEAM: StoreStats - Success");
         else if (pCallback.m_eResult == EResult.k_EResultInvalidParam)
         {
@@ -221,15 +250,22 @@ public static class SteamManager
             OnUserStatsReceived(callback);
         }
         else
-            DebugManager.Log(LogLevel.LogError, $"STEAM: StoreStats - Failed : {pCallback.m_eResult}");
+            DebugManager.Log(
+                LogLevel.LogError,
+                $"STEAM: StoreStats - Failed : {pCallback.m_eResult}"
+            );
     }
-    
+
     private static void OnAchievementStored(UserAchievementStored_t pCallback)
     {
-        if(_gameId != (AppId_t)pCallback.m_nGameID) return;
+        if (_gameId != (AppId_t)pCallback.m_nGameID)
+            return;
 
-        DebugManager.Log(LogLevel.LogInfo, pCallback.m_nMaxProgress == 0
-            ? $"STEAM: Achievement Unlocked : {pCallback.m_rgchAchievementName}"
-            : $"STEAM: Achievement Progress : {pCallback.m_rgchAchievementName} ({pCallback.m_nCurProgress} / {pCallback.m_nCurProgress})");
+        DebugManager.Log(
+            LogLevel.LogInfo,
+            pCallback.m_nMaxProgress == 0
+                ? $"STEAM: Achievement Unlocked : {pCallback.m_rgchAchievementName}"
+                : $"STEAM: Achievement Progress : {pCallback.m_rgchAchievementName} ({pCallback.m_nCurProgress} / {pCallback.m_nCurProgress})"
+        );
     }
 }
