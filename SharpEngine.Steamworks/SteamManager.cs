@@ -16,7 +16,7 @@ public static class SteamManager
     private static bool _requestedStats;
     private static bool _statsValid;
     private static bool _storeStats;
-    private static readonly List<Achievement> Achievements = new();
+    private static readonly List<Achievement> Achievements = [];
 
     /// <summary>
     /// Is SteamManager is Running
@@ -140,9 +140,7 @@ public static class SteamManager
     {
         var nb = SteamUGC.GetNumSubscribedItems();
         var items = new PublishedFileId_t[nb];
-        return SteamUGC.GetSubscribedItems(items, nb) != 0
-            ? items
-            : Array.Empty<PublishedFileId_t>();
+        return SteamUGC.GetSubscribedItems(items, nb) != 0 ? items : [];
     }
 
     /// <summary>
