@@ -67,7 +67,6 @@ public static class SteamManager
                     _gameId = SteamUtils.GetAppID();
 
                     SteamClient.SetWarningMessageHook(SteamApiDebugTextHook);
-                    //Callback<GameOverlayActivated_t>.Create(OnGameOverlayActivated);
                     Callback<UserStatsReceived_t>.Create(OnUserStatsReceived);
                     Callback<UserStatsStored_t>.Create(OnUserStatsStored);
                     Callback<UserAchievementStored_t>.Create(OnAchievementStored);
@@ -188,13 +187,6 @@ public static class SteamManager
             LogLevel.LogError,
             $"STEAM: Severity : {nSeverity} - Message : {pchDebugText}"
         );
-
-    /*private static void OnGameOverlayActivated(GameOverlayActivated_t pCallback)
-    {
-        if (pCallback.m_bActive != 0)
-        {
-        }
-    }*/
 
     private static void OnUserStatsReceived(UserStatsReceived_t pCallback)
     {
