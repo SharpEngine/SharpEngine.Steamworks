@@ -21,7 +21,7 @@
     <PackageTags>Steamworks,SharpEngine,Game,Engine</PackageTags>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="SharpEngine.Core" Version="1.1.2" />
+    <PackageReference Include="SharpEngine.Core" Version="1.7.2" />
     <PackageReference Include="Steamworks.NET" Version="20.1.0" />
   </ItemGroup>
   <ItemGroup>
