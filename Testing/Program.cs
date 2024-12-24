@@ -21,10 +21,7 @@ internal static class Program
             true,
             true,
             true
-        )
-        {
-            RenderImGui = DebugManager.CreateSeImGuiWindow
-        };
+        );
 
         SteamManager.AddAchievement(new Achievement("TUER_TIMMY", "Kill Timmy"));
         SteamManager.AddAchievement(new Achievement("NEW_ALLY", "New Ally"));
@@ -32,7 +29,7 @@ internal static class Program
         SteamManager.AddAchievement(new Achievement("WAVE_5", "In Midst of Battle"));
         SteamManager.AddAchievement(new Achievement("WAVE_10", "That's a lot, isn't it?"));
 
-        SteamManager.Init(window, APPID);
+        SteamManager.Init(window, uint.Parse(File.ReadAllText("steam_appid.txt")));
 
         window.AddScene(new MyScene());
 
