@@ -36,21 +36,21 @@ public class MyScene : Scene
         SteamManager.RunCallbacks();
 
         if (InputManager.IsKeyPressed(Key.E))
-            DebugManager.Log(LogLevel.LogInfo, $"TESTING: Username : {SteamManager.UserName}");
+            DebugManager.Log(LogLevel.Info, $"TESTING: Username : {SteamManager.UserName}");
         if (InputManager.IsKeyPressed(Key.R))
             foreach (var achievement in SteamManager.GetAchievements())
             {
                 DebugManager.Log(
-                    LogLevel.LogInfo,
+                    LogLevel.Info,
                     $"TESTING: Achievement : {achievement.AchievementId}"
                 );
-                DebugManager.Log(LogLevel.LogInfo, $"TESTING:   Name : {achievement.DisplayName}");
+                DebugManager.Log(LogLevel.Info, $"TESTING:   Name : {achievement.DisplayName}");
                 DebugManager.Log(
-                    LogLevel.LogInfo,
+                    LogLevel.Info,
                     $"TESTING:   Description : {achievement.DisplayDescription}"
                 );
-                DebugManager.Log(LogLevel.LogInfo, $"TESTING:   Achieved : {achievement.Achieved}");
-                DebugManager.Log(LogLevel.LogInfo, $"TESTING:   Icon : {achievement.Icon}");
+                DebugManager.Log(LogLevel.Info, $"TESTING:   Achieved : {achievement.Achieved}");
+                DebugManager.Log(LogLevel.Info, $"TESTING:   Icon : {achievement.Icon}");
             }
     }
 }

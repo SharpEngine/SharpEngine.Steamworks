@@ -7,6 +7,10 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.2.0 - 26/04/2026
+[.] SharpEngine.Core : 2.5.1<br/>
+[.] DotNet : 10
+
 ### V 1.1.1 - 24/12/2024
 [.] SharpEngine.Core : 1.9.3<br>
 [.] Steamworks.NET : 2024.8.0

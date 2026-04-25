@@ -54,16 +54,16 @@ public static class SteamManager
             return;
         }
 
-        DebugManager.Log(LogLevel.LogInfo, "STEAM: Attempting initialization...");
+        DebugManager.Log(LogLevel.Info, "STEAM: Attempting initialization...");
         try
         {
             IsRunning = SteamAPI.IsSteamRunning();
-            DebugManager.Log(LogLevel.LogInfo, $"STEAM: Is Running : {SteamAPI.IsSteamRunning()}");
+            DebugManager.Log(LogLevel.Info, $"STEAM: Is Running : {SteamAPI.IsSteamRunning()}");
             if (SteamAPI.IsSteamRunning())
             {
                 if (SteamAPI.Init())
                 {
-                    DebugManager.Log(LogLevel.LogInfo, "STEAM: Initialization succeeded !");
+                    DebugManager.Log(LogLevel.Info, "STEAM: Initialization succeeded !");
                     _gameId = SteamUtils.GetAppID();
 
                     SteamClient.SetWarningMessageHook(SteamApiDebugTextHook);
@@ -71,11 +71,11 @@ public static class SteamManager
                     Callback<UserStatsStored_t>.Create(OnUserStatsStored);
                     Callback<UserAchievementStored_t>.Create(OnAchievementStored);
 
-                    DebugManager.Log(LogLevel.LogInfo, $"STEAM: Connected User : {UserName}");
+                    DebugManager.Log(LogLevel.Info, $"STEAM: Connected User : {UserName}");
                 }
                 else
                 {
-                    DebugManager.Log(LogLevel.LogError, $"STEAM: Initialization failed !");
+                    DebugManager.Log(LogLevel.Error, $"STEAM: Initialization failed !");
                     window.Stop();
                 }
             }
@@ -85,7 +85,7 @@ public static class SteamManager
         catch (Exception e)
         {
             DebugManager.Log(
-                LogLevel.LogError,
+                LogLevel.Error,
                 $"STEAM: Exception during Initialization: \n{e.StackTrace}"
             );
             window.Stop();
@@ -97,16 +97,16 @@ public static class SteamManager
     /// </summary>
     public static void Shutdown()
     {
-        DebugManager.Log(LogLevel.LogInfo, "STEAM: Shutting down...");
+        DebugManager.Log(LogLevel.Info, "STEAM: Shutting down...");
         try
         {
             SteamAPI.Shutdown();
-            DebugManager.Log(LogLevel.LogInfo, "STEAM: Shutdown succeeded !");
+            DebugManager.Log(LogLevel.Info, "STEAM: Shutdown succeeded !");
         }
         catch (Exception e)
         {
             DebugManager.Log(
-                LogLevel.LogError,
+                LogLevel.Error,
                 $"STEAM: Exception during Shutdown: \n{e.StackTrace}"
             );
         }
@@ -180,7 +180,7 @@ public static class SteamManager
 
     private static void SteamApiDebugTextHook(int nSeverity, StringBuilder pchDebugText) =>
         DebugManager.Log(
-            LogLevel.LogError,
+            LogLevel.Error,
             $"STEAM: Severity : {nSeverity} - Message : {pchDebugText}"
         );
 
@@ -191,7 +191,7 @@ public static class SteamManager
 
         if (pCallback.m_eResult == EResult.k_EResultOK)
         {
-            DebugManager.Log(LogLevel.LogInfo, "STEAM: ReceiveStats - Success");
+            DebugManager.Log(LogLevel.Info, "STEAM: ReceiveStats - Success");
             _statsValid = true;
 
             foreach (var achievement in Achievements)
@@ -213,7 +213,7 @@ public static class SteamManager
         }
         else
             DebugManager.Log(
-                LogLevel.LogError,
+                LogLevel.Error,
                 $"STEAM: ReceiveStats - Failed : {pCallback.m_eResult}"
             );
     }
@@ -224,10 +224,10 @@ public static class SteamManager
             return;
 
         if (pCallback.m_eResult == EResult.k_EResultOK)
-            DebugManager.Log(LogLevel.LogInfo, "STEAM: StoreStats - Success");
+            DebugManager.Log(LogLevel.Info, "STEAM: StoreStats - Success");
         else if (pCallback.m_eResult == EResult.k_EResultInvalidParam)
         {
-            DebugManager.Log(LogLevel.LogError, "STEAM: StoreStats - Failed to validate");
+            DebugManager.Log(LogLevel.Error, "STEAM: StoreStats - Failed to validate");
             var callback = new UserStatsReceived_t
             {
                 m_eResult = EResult.k_EResultOK,
@@ -237,7 +237,7 @@ public static class SteamManager
         }
         else
             DebugManager.Log(
-                LogLevel.LogError,
+                LogLevel.Error,
                 $"STEAM: StoreStats - Failed : {pCallback.m_eResult}"
             );
     }
@@ -248,7 +248,7 @@ public static class SteamManager
             return;
 
         DebugManager.Log(
-            LogLevel.LogInfo,
+            LogLevel.Info,
             pCallback.m_nMaxProgress == 0
                 ? $"STEAM: Achievement Unlocked : {pCallback.m_rgchAchievementName}"
                 : $"STEAM: Achievement Progress : {pCallback.m_rgchAchievementName} ({pCallback.m_nCurProgress} / {pCallback.m_nCurProgress})"
