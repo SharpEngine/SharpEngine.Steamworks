@@ -1,7 +1,7 @@
 namespace SharpEngine.Steamworks.Steam;
 
 /// <summary>
-/// Class which represents Steam Achievement
+/// Class that represents Steam Achievement
 /// </summary>
 /// <param name="achievementId">Achievement Id</param>
 /// <param name="displayName">Achievement Name</param>
@@ -32,7 +32,7 @@ public class Achievement(
     public string DisplayDescription { get; set; } = displayDescription;
 
     /// <summary>
-    /// If Achievement is achieve
+    /// If Achievement is achieved
     /// </summary>
     public bool Achieved { get; set; } = achieved;
 

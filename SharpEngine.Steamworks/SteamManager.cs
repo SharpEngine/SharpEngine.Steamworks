@@ -19,9 +19,9 @@ public static class SteamManager
     private static readonly List<Achievement> Achievements = [];
 
     /// <summary>
-    /// Is SteamManager is Running
+    /// If SteamManager is Running
     /// </summary>
-    public static bool IsRunning { get; private set; } = false;
+    public static bool IsRunning { get; private set; }
 
     /// <summary>
     /// Add Achievement to Manager
@@ -118,17 +118,13 @@ public static class SteamManager
     /// <param name="name">Achievement Id</param>
     public static void UnlockAchievement(string name)
     {
-        foreach (var achievement in Achievements)
-        {
-            if (achievement.AchievementId == name)
-            {
-                achievement.Achieved = true;
-                achievement.Icon = 0;
-                SteamUserStats.SetAchievement(achievement.AchievementId);
-                _storeStats = true;
-                break;
-            }
-        }
+        var achievement = Achievements.FirstOrDefault(a => a.AchievementId == name);
+        if (achievement == null) return;
+        
+        achievement.Achieved = true;
+        achievement.Icon = 0;
+        SteamUserStats.SetAchievement(achievement.AchievementId);
+        _storeStats = true;
     }
 
     /// <summary>
@@ -150,7 +146,7 @@ public static class SteamManager
     public static uint GetItemState(PublishedFileId_t id) => SteamUGC.GetItemState(id);
 
     /// <summary>
-    /// Get Item Install Info
+    /// Get Item Installation Info
     /// </summary>
     /// <param name="id">Item</param>
     /// <returns>Install Info</returns>

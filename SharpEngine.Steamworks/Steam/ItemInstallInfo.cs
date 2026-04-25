@@ -1,11 +1,11 @@
 namespace SharpEngine.Steamworks.Steam;
 
 /// <summary>
-/// Class which represents install info of steam item
+/// Class that represents install info of steam item
 /// </summary>
 /// <param name="sizeOnDisk">Item Size</param>
 /// <param name="folder">Item Folder</param>
-/// <param name="timestamp">Item Install Timestamp</param>
+/// <param name="timestamp">Item Installation Timestamp</param>
 public class ItemInstallInfo(ulong sizeOnDisk, string folder, uint timestamp)
 {
     /// <summary>
